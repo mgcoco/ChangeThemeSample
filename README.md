@@ -3,7 +3,8 @@ Follow the rules to build your own themeable app.
 This library will help you to change themes fastly.
 
 # ScreenShoot
-
+![Skin Resource](/resource/sample_skin_resource_compare.png)
+![Effect of skin](/resource/sample_skin_resource_compare.png)
 # Import
 ```
 allprojects {
@@ -45,4 +46,10 @@ CustomViewAttributeApplyListener listener = (view, fieldName, resId) -> {
     }
 };
 SkinManager.getInstance().addCustomView(new SkinCustomView(ProgressBar.class.getSimpleName(), ProgressBar.class.getName(), new String[]{"progressDrawable"}, listener));
+```
+### Dynamically setup
+Use SkingManager methods to get resources from target skin APK.
+```
+SkinManager.getInstance().getColor(R.color.colorPrimary);
+SkinManager.getInstance().getDrawable(R.drawable.icon_email);
 ```
