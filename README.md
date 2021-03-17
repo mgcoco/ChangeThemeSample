@@ -25,7 +25,10 @@ SkinManager.getInstance().loadSkinApk(path);
 ```
 (Required) Put this line before setContentView method.
 ```
-SkinManager.getInstance().inflate(getLayoutInflater());
+//In Recyclerview, Dialog
+SkinManager.getInstance().inflate(layoutInflater);
+//In AppCompatActivity, Fragment
+SkinManager.getInstance().inflate(layoutInflater, lifecycle);
 ```
 (Required) Apply after view created or skin changed.
 ```
@@ -51,6 +54,8 @@ Use SkingManager methods to get resources from target skin APK.
 ```
 SkinManager.getInstance().getColor(R.color.colorPrimary);
 SkinManager.getInstance().getDrawable(R.drawable.icon_email);
+or
+SkinManager.getInstance().putDynamicGroup(view, AttributeName.ATTRIBUTE_TEXTCOLOR, AttributeTypeName.TYPE_COLOR, R.color.colorPrimary);
 ```
 ### Supported attribute
 - background

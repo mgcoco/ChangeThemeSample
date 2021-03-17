@@ -1,38 +1,36 @@
 package com.mgcoco.changethemesample;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mgcoco.changetheme.AttributeName;
 import com.mgcoco.changetheme.AttributeTypeName;
 import com.mgcoco.changetheme.SkinManager;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
-    private TextView textStatus;
-
-    private int status = (int)(Math.random() * 3);
+public class SecondActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SkinManager.getInstance().inflate(getLayoutInflater(), getLifecycle());
-        setContentView(R.layout.fragment_first);
+        setContentView(R.layout.fragment_second);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.button_first).setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, SecondActivity.class);
-            startActivity(i);
+        findViewById(R.id.button_second).setOnClickListener(v -> {
+            finish();
+        });
+
+        findViewById(R.id.clear_theme).setOnClickListener(v -> {
+            SkinManager.getInstance().clearTheme();
         });
 
         findViewById(R.id.change_theme).setOnClickListener(v -> {
@@ -40,10 +38,17 @@ public class MainActivity extends AppCompatActivity {
             SkinManager.getInstance().apply();
         });
 
-        textStatus = findViewById(R.id.status);
-        new Handler(Looper.myLooper()).postDelayed(() -> {
-            SkinManager.getInstance().putDynamicGroup(textStatus, AttributeName.ATTRIBUTE_TEXTCOLOR, AttributeTypeName.TYPE_COLOR, getStatusColor(status));
-        }, 500);
+        SkinManager.getInstance().putDynamicGroup(findViewById(R.id.textview_second), AttributeName.ATTRIBUTE_TEXTCOLOR, AttributeTypeName.TYPE_COLOR,  R.color.teal_700);
+
+        ArrayList<ItemSample> data = new ArrayList<>();
+        data.add(new ItemSample(R.drawable.icon_trash, "trash icon"));
+        data.add(new ItemSample(R.drawable.icon_email, "email icon"));
+        data.add(new ItemSample(R.drawable.icon_edit, "edit icon"));
+        data.add(new ItemSample(R.drawable.icon_gift, "gift icon"));
+        data.add(new ItemSample(R.drawable.icon_location, "location icon"));
+        data.add(new ItemSample(R.drawable.icon_setting, "setting icon"));
+        data.add(new ItemSample(R.drawable.icon_search, "search icon"));
+        ((RecyclerView)findViewById(R.id.list)).setAdapter(new MyAdapter(this, data));
     }
 
     @Override
@@ -66,16 +71,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private int getStatusColor(int status){
-        switch (status){
-            case 0:
-                return R.color.colorPrimary;
-            case 1:
-                return R.color.colorPrimaryDark;
-            default:
-                return R.color.colorSecondary;
-        }
     }
 }

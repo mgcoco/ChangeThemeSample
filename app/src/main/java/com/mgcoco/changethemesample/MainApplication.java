@@ -13,7 +13,7 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         SkinManager.getInstance().init(this);
-        SkinManager.getInstance().loadSkinApk(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/skin.apk");
+        SkinManager.getInstance().loadSkinApk(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/skin.apk");
 
         CustomViewAttributeApplyListener listener = (view, fieldName, resId) -> {
             String viewName = view.getClass().getSimpleName();
@@ -25,4 +25,5 @@ public class MainApplication extends Application {
         };
         SkinManager.getInstance().addCustomView(new SkinCustomView(ProgressBar.class.getSimpleName(), ProgressBar.class.getName(), new String[]{"progressDrawable"}, listener));
     }
+
 }
